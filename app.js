@@ -6,7 +6,7 @@ const port = process.env.PORT || 3000;
 
 // Define a route handler for the default home page
 app.get('/', (req, res) => {
-    res.send('Hello World! yay... it works!');
+    res.send('Hello World! yay... it works fine!');
 });
 
 // Start the server and listen on the specified port
