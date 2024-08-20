@@ -27,8 +27,7 @@ jobs:
           server: ${{ secrets.GIT_CPANEL_SERVER }}
           username: ${{ secrets.GIT_CPANEL_USERNAME }}
           password: ${{ secrets.GIT_CPANEL_PASSWORD }}
-          protocol: ftps  # Use 'ftp' or 'ftps' depending on your server's setup
-          port: 22        # Explicitly specifying the FTP port
+          protocol: ftps  # Use 'ftp' or 'ftps' depending on your server's setup       # Explicitly specifying the FTP port
           local-dir: ./
           server-dir: /servertest.citratechsolar.com/
 
