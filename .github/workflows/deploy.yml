@@ -34,8 +34,8 @@ jobs:
 
       - name: Install dependencies on cPanel server
         run: |
-          ssh -p 21098 ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "source ~/nodevenv/servertest.citratechsolar.com/18/bin/activate && cd ~/servertest.citratechsolar.com/ && npm install"
+          ssh ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "source ~/nodevenv/servertest.citratechsolar.com/18/bin/activate && cd ~/servertest.citratechsolar.com/ && npm install"
 
       - name: Restart Node.js server
         run: |
-          ssh -p 21098 ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "source ~/nodevenv/servertest.citratechsolar.com/18/bin/activate && cd ~/servertest.citratechsolar.com/ && npm start"
+          ssh ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "source ~/nodevenv/servertest.citratechsolar.com/18/bin/activate && cd ~/servertest.citratechsolar.com/ && npm start"
