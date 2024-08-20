@@ -29,12 +29,12 @@ jobs:
           password: ${{ secrets.GIT_CPANEL_PASSWORD }}
           protocol: ftp  # or 'sftp' based on your cPanel configuration
           local-dir: ./
-          server-dir: ../servertest.citratechsolar.com/
+          server-dir: /servertest.citratechsolar.com/
 
       - name: Install dependencies on cPanel server
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "cd ~/home/nodevenv/servertest.citratechsolar.com/18/bin/activate && cd ~/servertest.citratechsolar.com/ && npm install"
+          ssh -o StrictHostKeyChecking=no ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "cd ~/nodevenv/servertest.citratechsolar.com/18/bin/activate && cd ~/servertest.citratechsolar.com/ && npm install"
 
       - name: Restart Node.js server
         run: |
-          ssh ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "cd ~/home/nodevenv/servertest.citratechsolar.com/18/bin/activate && cd ~/servertest.citratechsolar.com/ && npm run start"
+          ssh ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "cd ~/nodevenv/servertest.citratechsolar.com/18/bin/activate && cd ~/servertest.citratechsolar.com/ && npm run start"
