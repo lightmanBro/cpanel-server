@@ -13,7 +13,7 @@ jobs:
       - name: Get latest code
         uses: actions/checkout@v3
 
-      - name: Set up Node.js 18
+      - name: Set up Node.js 16
         uses: actions/setup-node@v3
         with:
           node-version: '18'
@@ -27,14 +27,14 @@ jobs:
           server: ${{ secrets.GIT_CPANEL_SERVER }}
           username: ${{ secrets.GIT_CPANEL_USERNAME }}
           password: ${{ secrets.GIT_CPANEL_PASSWORD }}
-          protocol: ftps  # Use 'ftp' or 'ftps' depending on your server's setup       # Explicitly specifying the FTP port
+          protocol: ftp  # or 'sftp' based on your cPanel configuration
           local-dir: ./
-          server-dir: /servertest.citratechsolar.com/
+          server-dir: ../servertest.citratechsolar.com/
 
       - name: Install dependencies on cPanel server
         run: |
-          ssh -p 22 ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "source ~/nodevenv/servertest.citratechsolar.com/18/bin/activate && cd ~/servertest.citratechsolar.com/ && npm install"
+          ssh ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "cd ~/nodejsapps/servertest.citratechsolar.com/ && npm install"
 
       - name: Restart Node.js server
         run: |
-          ssh -p 22 ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "source ~/nodevenv/servertest.citratechsolar.com/18/bin/activate && cd ~/servertest.citratechsolar.com/ && npm start"
+          ssh ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "cd ~/nodejsapps/servertest.citratechsolar.com/ && npm run start"
