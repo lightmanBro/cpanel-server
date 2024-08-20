@@ -28,14 +28,14 @@ jobs:
           username: ${{ secrets.GIT_CPANEL_USERNAME }}
           password: ${{ secrets.GIT_CPANEL_PASSWORD }}
           protocol: ftps  # Use 'ftp' or 'ftps' depending on your server's setup
-          port: 21       # Explicitly specifying the FTP port
+          port: 22        # Explicitly specifying the FTP port
           local-dir: ./
           server-dir: /servertest.citratechsolar.com/
 
       - name: Install dependencies on cPanel server
         run: |
-          ssh  "source ~/nodevenv/servertest.citratechsolar.com/18/bin/activate && cd ~/servertest.citratechsolar.com/ && npm install"
+          ssh -p 22 ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "source ~/nodevenv/servertest.citratechsolar.com/18/bin/activate && cd ~/servertest.citratechsolar.com/ && npm install"
 
       - name: Restart Node.js server
         run: |
-          ssh "source ~/nodevenv/servertest.citratechsolar.com/18/bin/activate && cd ~/servertest.citratechsolar.com/ && npm start"
+          ssh -p 22 ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "source ~/nodevenv/servertest.citratechsolar.com/18/bin/activate && cd ~/servertest.citratechsolar.com/ && npm start"
