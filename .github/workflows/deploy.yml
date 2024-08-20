@@ -33,7 +33,7 @@ jobs:
           server-dir: ../servertest.citratechsolar.com/
 
       - name: Add SSH key
-        uses: webfactory/ssh-agent@v0.8.1
+        uses: webfactory/ssh-agent@v0.5.3  # Updated to the latest stable version
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
