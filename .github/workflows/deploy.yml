@@ -27,7 +27,7 @@ jobs:
           server: ${{ secrets.GIT_CPANEL_SERVER }}
           username: ${{ secrets.GIT_CPANEL_USERNAME }}
           password: ${{ secrets.GIT_CPANEL_PASSWORD }}
-          protocol: sftp  # or 'sftp' based on your cPanel configuration
+          protocol: ftp  # or 'sftp' based on your cPanel configuration
           local-dir: ./
           port: 21
           server-dir: ../servertest.citratechsolar.com/
