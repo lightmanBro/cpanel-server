@@ -29,13 +29,12 @@ jobs:
           password: ${{ secrets.GIT_CPANEL_PASSWORD }}
           protocol: ftp  # or 'sftp' based on your cPanel configuration
           local-dir: ./
-          server-dir: ./
-          security: loose
+          server-dir: /home/your-cpanel-username/nodejsapps/your-app-dir/
 
       - name: Install dependencies on cPanel server
         run: |
-          ssh ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "cd ~/nodejsapps/servertest.citratechsolar.com/ && npm install"
+          ssh ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "cd ~/nodejsapps/your-app-dir && npm install"
 
       - name: Restart Node.js server
         run: |
-          ssh ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "cd ~/nodejsapps/servertest.citratechsolar.com/ && npm run start"
+          ssh ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "cd ~/nodejsapps/your-app-dir && npm run start"
