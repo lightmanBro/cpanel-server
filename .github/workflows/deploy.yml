@@ -1,0 +1,45 @@
+name: 🚀 Deploy Node.js Server on Push
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  web-deploy:
+    name: Deploy Node.js Server
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: |
+          npm install
+
+      - name: Build Project (Optional)
+        run: |
+          npm run build
+
+      - name: Sync files to cPanel
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.GIT_CPANEL_SERVER }}
+          username: ${{ secrets.GIT_CPANEL_USERNAME }}
+          password: ${{ secrets.GIT_CPANEL_PASSWORD }}
+          protocol: ftp  # or 'sftp' based on your cPanel configuration
+          local-dir: ./
+          server-dir: /home/your-cpanel-username/nodejsapps/your-app-dir/
+
+      - name: Install dependencies on cPanel server
+        run: |
+          ssh ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "cd ~/nodejsapps/your-app-dir && npm install"
+
+      - name: Restart Node.js server
+        run: |
+          ssh ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "cd ~/nodejsapps/your-app-dir && npm run start"
