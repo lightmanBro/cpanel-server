@@ -16,7 +16,7 @@ jobs:
       - name: Set up Node.js 16
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '16'
 
       - name: Install dependencies
         run: npm install
@@ -33,8 +33,8 @@ jobs:
 
       - name: Install dependencies on cPanel server
         run: |
-          ssh ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "cd ~/nodejsapps/servertest.citratechsolar.com && npm install"
+          ssh ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "source /home/server-test/nodevenv/myapp/16/bin/activate && cd ~/myapp && npm install"
 
       - name: Restart Node.js server
         run: |
-          ssh ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "cd ~/nodejsapps/servertest.citratechsolar.com && npm run start"
+          ssh ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "source /home/server-test/nodevenv/myapp/16/bin/activate && cd ~/myapp && npm run start"
