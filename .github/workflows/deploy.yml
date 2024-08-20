@@ -29,7 +29,7 @@ jobs:
           password: ${{ secrets.GIT_CPANEL_PASSWORD }}
           protocol: ftp  # or 'sftp' based on your cPanel configuration
           local-dir: ./
-          server-dir: ../servertest.citratechsolar.com
+          server-dir: ../servertest.citratechsolar.com/
 
       - name: Install dependencies on cPanel server
         run: |
