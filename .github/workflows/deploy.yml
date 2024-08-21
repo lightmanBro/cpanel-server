@@ -37,9 +37,8 @@ jobs:
           SSH_PASSPHRASE: servertest%citratech%
         run: |
           eval $(ssh-agent -s)
-          ssh-add ~/.ssh/server-test
           echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - <<< "$servertest%citratech%"
-          ssh-add -l
+          ssh-add ~/.ssh/server-test
 
       - name: Install dependencies on cPanel server
         run: |
