@@ -34,7 +34,7 @@ jobs:
       - name: Add SSH key with passphrase
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          SSH_PASSPHRASE: servertest%citratech%
+          
         run: |
           ssh -ef | grep ssh-agent echo "found" || ssh-add -k ~/.ssh/id_rsa
           eval eval $(ssh-agent -s)
