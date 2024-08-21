@@ -31,16 +31,6 @@ jobs:
           local-dir: ./
           server-dir: ../servertest.citratechsolar.com/
 
-      - name: Add SSH key with passphrase
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          SSH_PASSPHRASE: servertest%citratech%
-        run: |
-          eval $(ssh-agent -s)
-          ssh-add - <<< ~/.ssh/server-test
-          echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - <<< "$servertest%citratech%"
-          ssh-add -l
-
       - name: Install dependencies on cPanel server
         run: |
           ssh -p 22 ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "cd ~/nodejsapps/servertest.citratechsolar.com && npm install"
