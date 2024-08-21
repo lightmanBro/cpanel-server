@@ -28,7 +28,7 @@ jobs:
           username: ${{ secrets.GIT_CPANEL_USERNAME }}
           password: ${{ secrets.GIT_CPANEL_PASSWORD }}
           protocol: ftps  # Use 'ftps' for FTP Secure or 'sftp' based on your cPanel configuration
-          local-dir: ../servertest.citratechsolar.com
+          local-dir: ../servertest.citratechsolar.com/
 
       # Remove SSH-related steps
 
