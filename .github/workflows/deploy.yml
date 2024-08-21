@@ -40,14 +40,14 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keyscan -p 21098 ${{ secrets.GIT_CPANEL_SERVER }} >> ~/.ssh/known_hosts
           
+      - name: Test SSH connection
+        run: |
+          ssh -o StrictHostKeyChecking=no -p 21098 ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "echo 'SSH Connection Successful' > ~/ssh_test_success.txt"
 
       - name: Install dependencies on cPanel server
         run: |
           ssh -p 21098 ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "cd ~/nodevenv/servertest.citratechsolar.com && npm install"
           
-      - name: Test SSH connection
-        run: |
-          ssh -o StrictHostKeyChecking=no -p 21098 ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "echo 'SSH Connection Successful' > ~/ssh_test_success.txt"
       - name: Restart Node.js server
         run: |
           ssh -p 21098 ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "cd ~/nodevenv/servertest.citratechsolar.com && npm run start"
