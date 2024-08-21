@@ -29,7 +29,7 @@ jobs:
           password: ${{ secrets.GIT_CPANEL_PASSWORD }}
           protocol: ftp  # or 'sftp' based on your cPanel configuration
           local-dir: ./
-          port: 21
+          port: 21098
           server-dir: ../servertest.citratechsolar.com/
 
       - name: Add SSH key
@@ -39,8 +39,8 @@ jobs:
 
       - name: Install dependencies on cPanel server
         run: |
-          ssh -o StrictHostKeyChecking=no -p 21 ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "cd ~/nodejsapps/servertest.citratechsolar.com && npm install"
+          ssh -o StrictHostKeyChecking=no -p 21098 ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "cd ~/nodejsapps/servertest.citratechsolar.com && npm install"
 
       - name: Restart Node.js server
         run: |
-          ssh -o StrictHostKeyChecking=no -p 21 ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "cd ~/nodejsapps/servertest.citratechsolar.com && npm run start"
+          ssh -o StrictHostKeyChecking=no -p 21098 ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "cd ~/nodejsapps/servertest.citratechsolar.com && npm run start"
