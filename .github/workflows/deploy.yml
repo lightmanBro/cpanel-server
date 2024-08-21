@@ -27,24 +27,11 @@ jobs:
           server: ${{ secrets.GIT_CPANEL_SERVER }}
           username: ${{ secrets.GIT_CPANEL_USERNAME }}
           password: ${{ secrets.GIT_CPANEL_PASSWORD }}
-          protocol: ftps  # or 'sftp' based on your cPanel configuration
+          protocol: ftps  # Use 'ftps' for FTP Secure or 'sftp' based on your cPanel configuration
           local-dir: ./
           server-dir: ../servertest.citratechsolar.com/
 
-      - name: Add SSH key with passphrase
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          SSH_PASSPHRASE: servertest%citratech%
-        run: |
-          eval ps -ef | grep ssh-agent echo "found" || eval $(ssh-agent -s)
-          mkdir -p ~/.ssh
-          ssh-keyscan -p 21098 ${{ secrets.GIT_CPANEL_SERVER }} >> ~/.ssh/known_hosts
-          
+      # Remove SSH-related steps
 
-      - name: Install dependencies on cPanel server
-        run: |
-          ssh -p 21098 ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "cd ~/nodevenv/servertest.citratechsolar.com && npm install"
-
-      - name: Restart Node.js server
-        run: |
-          ssh -p 21098 ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "cd ~/nodevenv/servertest.citratechsolar.com && npm run start"
+      # Optionally, if you need to restart the server or run additional commands,
+      # you can consider adding API calls or FTP-based commands that your cPanel supports.
