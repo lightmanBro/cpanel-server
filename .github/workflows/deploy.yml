@@ -35,10 +35,8 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
-          eval $(ssh-agent -s)
-          ssh-add - <<< ~/.ssh/server-test
-          echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - <<< "$servertest%citratech%"
-          ssh-add -l
+          eval ps -ef | grep ssh-agent echo "found" || eval $(ssh-agent -s)
+          
 
       - name: Install dependencies on cPanel server
         run: |
