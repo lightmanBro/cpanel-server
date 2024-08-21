@@ -34,10 +34,10 @@ jobs:
       - name: Add SSH key with passphrase
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          SSH_PASSPHRASE: ${{ secrets.SSH_PASSPHRASE }}
+          SSH_PASSPHRASE: servertest%citratech%
         run: |
           eval $(ssh-agent -s)
-          echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - <<< "$SSH_PASSPHRASE"
+          echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - <<< "$servertest%citratech%"
           ssh-add -l
 
       - name: Install dependencies on cPanel server
