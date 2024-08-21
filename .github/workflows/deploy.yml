@@ -27,29 +27,24 @@ jobs:
           server: ${{ secrets.GIT_CPANEL_SERVER }}
           username: ${{ secrets.GIT_CPANEL_USERNAME }}
           password: ${{ secrets.GIT_CPANEL_PASSWORD }}
-          protocol: ftp  # or 'sftp' based on your cPanel configuration
+          protocol: ftps  # or 'sftp' based on your cPanel configuration
           local-dir: ./
           server-dir: ../servertest.citratechsolar.com/
 
       - name: Add SSH key with passphrase
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          
+          SSH_PASSPHRASE: servertest%citratech%
         run: |
-          ssh -ef | grep ssh-agent echo "found" || ssh-add -k ~/.ssh/id_rsa
-          eval eval $(ssh-agent -s)
-          ssh-add ~/.ssh/server-test
+          eval ps -ef | grep ssh-agent echo "found" || eval $(ssh-agent -s)
           mkdir -p ~/.ssh
           ssh-keyscan -p 21098 ${{ secrets.GIT_CPANEL_SERVER }} >> ~/.ssh/known_hosts
           
-      - name: Test SSH connection
-        run: |
-          ssh -p 21098 ~/servertest.citratechsolar.com "echo 'SSH Connection Successful' > ~/ssh_test_success.txt"
 
       - name: Install dependencies on cPanel server
         run: |
           ssh -p 21098 ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "cd ~/nodevenv/servertest.citratechsolar.com && npm install"
-          
+
       - name: Restart Node.js server
         run: |
           ssh -p 21098 ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "cd ~/nodevenv/servertest.citratechsolar.com && npm run start"
