@@ -31,15 +31,17 @@ jobs:
           local-dir: ./
           server-dir: ../servertest.citratechsolar.com/
 
-      - name: Add SSH key
-        uses: webfactory/ssh-agent@v0.5.3  # Updated to the latest stable version
+      - name: Start SSH Agent and Add SSH key
+        uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+        env:
+          SSH_PASSPHRASE: ${{ secrets.SSH_PASSPHRASE }}
 
       - name: Install dependencies on cPanel server
         run: |
-          ssh -p 22 citrhunx@premium279.web-hosting.com  ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "cd ~/nodejsapps/servertest.citratechsolar.com && npm install"
+          ssh -p 22 ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "cd ~/nodejsapps/servertest.citratechsolar.com && npm install"
 
       - name: Restart Node.js server
         run: |
-          ssh -p 22 citrhunx@premium279.web-hosting.com  ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "cd ~/nodejsapps/servertest.citratechsolar.com && npm run start"
+          ssh -p 22 ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "cd ~/nodejsapps/servertest.citratechsolar.com && npm run start"
