@@ -36,13 +36,15 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SSH_PASSPHRASE: servertest%citratech%
         run: |
-          eval ps -ef | grep ssh-agent echo "found" || eval $(ssh-agent -s)
+          ssh ps -ef | grep ssh-agent echo "found" || ssh-add -k ~/.ssh/id_rsa
+          eval eval $(ssh-agent -s)
+          ssh-add ~/.ssh/server-test
           mkdir -p ~/.ssh
           ssh-keyscan -p 21098 ${{ secrets.GIT_CPANEL_SERVER }} >> ~/.ssh/known_hosts
           
       - name: Test SSH connection
         run: |
-          ssh -p 21098 ${{ secrets.GIT_CPANEL_USERNAME }}@${{ secrets.GIT_CPANEL_SERVER }} "echo 'SSH Connection Successful' > ~/ssh_test_success.txt"
+          ssh -p 21098 ~/servertest.citratechsolar.com "echo 'SSH Connection Successful' > ~/ssh_test_success.txt"
 
       - name: Install dependencies on cPanel server
         run: |
