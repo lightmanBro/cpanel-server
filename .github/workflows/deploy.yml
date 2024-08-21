@@ -36,6 +36,8 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
           eval ps -ef | grep ssh-agent echo "found" || eval $(ssh-agent -s)
+          mkdir -p ~/.ssh
+          ssh-keyscan -p 21098 ${{ secrets.GIT_CPANEL_SERVER }} >> ~/.ssh/known_hosts
           
 
       - name: Install dependencies on cPanel server
