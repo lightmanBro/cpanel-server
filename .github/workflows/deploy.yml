@@ -36,7 +36,7 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SSH_PASSPHRASE: servertest%citratech%
         run: |
-          ssh ps -ef | grep ssh-agent echo "found" || ssh-add -k ~/.ssh/id_rsa
+          ssh -ef | grep ssh-agent echo "found" || ssh-add -k ~/.ssh/id_rsa
           eval eval $(ssh-agent -s)
           ssh-add ~/.ssh/server-test
           mkdir -p ~/.ssh
